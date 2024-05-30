@@ -8,20 +8,28 @@ import PlaygroundEditorTheme from './themes/PlaygroundEditorTheme';
 import './EditorComposer.css';
 import i18n from './locale';
 import { I18nextProvider } from 'react-i18next';
+import { Class } from 'utility-types';
+import { EditorThemeClasses, LexicalNode } from 'lexical';
 
 interface IEditorComposer {
   children: React.ReactElement;
   initialEditorState?: InitialEditorStateType;
+  additionalConfig?: {
+    namespace?: string,
+    nodes?: Array<Class<LexicalNode>>,
+    onError?: () => void,
+    theme?: EditorThemeClasses
+  }
 }
 
-const EditorComposer = ({ children, initialEditorState }: IEditorComposer) => {
+const EditorComposer = ({ children, initialEditorState, additionalConfig }: IEditorComposer) => {
   const initialConfig = {
-    namespace: 'VerbumEditor',
-    nodes: [...PlaygroundNodes],
-    onError: (error) => {
+    namespace: additionalConfig.namespace ? additionalConfig.namespace : 'DDEditor',
+    nodes: [...PlaygroundNodes, ...additionalConfig.nodes],
+    onError: additionalConfig.onError ? additionalConfig.onError : (error) => {
       throw error;
     },
-    theme: PlaygroundEditorTheme,
+    theme: additionalConfig.theme ? additionalConfig.theme : PlaygroundEditorTheme,
     editorState: initialEditorState,
   };
   return (
