@@ -27,13 +27,18 @@ const EditorComposer = ({ children, initialEditorState, additionalConfig }: IEdi
   if (additionalConfig?.namespace) {
     namespace = additionalConfig.namespace;
   }
+  var nodes = [...PlaygroundNodes];
+  if (additionalConfig?.nodes) {
+    nodes = [...PlaygroundNodes, ...additionalConfig.nodes]
+  }
+  var theme = additionalConfig?.theme ? additionalConfig.theme : PlaygroundEditorTheme;
   const initialConfig = {
     namespace,
-    nodes: [...PlaygroundNodes, ...additionalConfig?.nodes],
-    onError: additionalConfig?.onError ? additionalConfig.onError : (error) => {
+    nodes,
+    onError: (error) => {
       throw error;
     },
-    theme: additionalConfig?.theme ? additionalConfig.theme : PlaygroundEditorTheme,
+    theme,
     editorState: initialEditorState,
   };
   return (
