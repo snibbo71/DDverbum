@@ -24,12 +24,12 @@ interface IEditorComposer {
 
 const EditorComposer = ({ children, initialEditorState, additionalConfig }: IEditorComposer) => {
   const initialConfig = {
-    namespace: additionalConfig.namespace ? additionalConfig.namespace : 'DDEditor',
-    nodes: [...PlaygroundNodes, ...additionalConfig.nodes],
-    onError: additionalConfig.onError ? additionalConfig.onError : (error) => {
+    namespace: additionalConfig?.namespace ? additionalConfig.namespace : 'DDEditor',
+    nodes: [...PlaygroundNodes, ...additionalConfig?.nodes],
+    onError: additionalConfig?.onError ? additionalConfig.onError : (error) => {
       throw error;
     },
-    theme: additionalConfig.theme ? additionalConfig.theme : PlaygroundEditorTheme,
+    theme: additionalConfig?.theme ? additionalConfig.theme : PlaygroundEditorTheme,
     editorState: initialEditorState,
   };
   return (
