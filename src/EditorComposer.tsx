@@ -23,8 +23,12 @@ interface IEditorComposer {
 }
 
 const EditorComposer = ({ children, initialEditorState, additionalConfig }: IEditorComposer) => {
+  var namespace = "DDEditor";
+  if (additionalConfig?.namespace) {
+    namespace = additionalConfig.namespace;
+  }
   const initialConfig = {
-    namespace: additionalConfig?.namespace ? additionalConfig.namespace : 'DDEditor',
+    namespace,
     nodes: [...PlaygroundNodes, ...additionalConfig?.nodes],
     onError: additionalConfig?.onError ? additionalConfig.onError : (error) => {
       throw error;
